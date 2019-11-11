@@ -1,4 +1,4 @@
-package jogo;
+package src.jogo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +27,7 @@ public class Territorio extends JPanel {
         janela = new JFrame(nome);
         janela.add(this);
         janela.setSize(largura, altura + titulo);
+        janela.setResizable(false);
         janela.setVisible(true);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -98,7 +99,7 @@ public class Territorio extends JPanel {
             }
 
             // Mudar a condição para colisão do jogador principal com os inimigos
-            if (pontos == 1000) {
+            if (pontos == 150) {
                 jogando = false;
             }
 
@@ -117,7 +118,7 @@ public class Territorio extends JPanel {
 
     // Método para mostar uma mensagem ao final do jogo
     public void game_over() {
-        String mensagem = "Parabéns!";
+        String mensagem = "Que pena! Você perdeu... Pelo menos acumulou " + pontos + " pontos!";
         JOptionPane.showMessageDialog(this, mensagem, "Game Over", JOptionPane.YES_NO_OPTION);
     }
 }
