@@ -9,5 +9,13 @@ public class LeitorBotoes implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         JButton origem = (JButton) e.getSource();
+        switch(origem.getText()){
+            case "Sair":
+                System.exit(0);
+                break;
+            case "Começar":
+                JOptionPane.showMessageDialog(origem, "Começando jogo");
+                break;
+        }
     }
 }
