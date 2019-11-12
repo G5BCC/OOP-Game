@@ -2,6 +2,7 @@ package src.formulario;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import src.excecoes.*;
 
 public class Formulario{
     protected JFrame frame;
@@ -14,7 +15,9 @@ public class Formulario{
     private int ritmoJogo = 0;
     private int quantidadeObjetos = 0;
 
-    public Formulario(){
+    private static boolean flagComecarJogo = false;
+
+    public Formulario() {
         frame = new JFrame("teste");
         frame.setSize(500, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,12 +25,13 @@ public class Formulario{
 
         painel = new JPanel();
         frame.add(painel);
-        inserir_componentes(painel);
+         inserir_componentes(painel);
+        
 
         frame.setVisible(true);
     }
 
-    private static void inserir_componentes(JPanel panel){
+    private static void inserir_componentes(JPanel panel) {
         panel.setLayout(null);
 
         // Tamanho do território (janela)
@@ -44,14 +48,14 @@ public class Formulario{
         panel.add(labelTamanhoX);
         panel.add(labelTamanhoY);
 
-        JTextField tamanhoX = new JTextField(4);
-        JTextField tamanhoY = new JTextField(4);
+        JTextField textFieldTamanhoX = new JTextField(4);
+        JTextField textFieldTamanhoY = new JTextField(4);
 
-        tamanhoX.setBounds(30, 50, 100, 25);
-        tamanhoY.setBounds(30, 80, 100, 25);
+        textFieldTamanhoX.setBounds(30, 50, 100, 25);
+        textFieldTamanhoY.setBounds(30, 80, 100, 25);
 
-        panel.add(tamanhoX);
-        panel.add(tamanhoY);
+        panel.add(textFieldTamanhoX);
+        panel.add(textFieldTamanhoY);
 
         // Ritmo do jogo
         JLabel labelRitmoJogo = new JLabel("Ritmo do jogo: ");
@@ -95,6 +99,10 @@ public class Formulario{
         botaoSair.addActionListener(leitorBotoes);
     }
 
+    public void verificarCamposPreenchidos() throws ExcecaoCamposNaoPreenchidos{
+
+    }
+    
     public int getJanelaX(){
         return this.janelaX;
     }
@@ -113,5 +121,9 @@ public class Formulario{
 
     public int getQuantidadeObjetos(){
         return this.quantidadeObjetos;
+    }
+
+    public boolean comecarJogo(){
+        return flagComecarJogo;
     }
 }
