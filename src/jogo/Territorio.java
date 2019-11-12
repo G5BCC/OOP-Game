@@ -15,14 +15,21 @@ public class Territorio extends JPanel {
 
     private static int titulo = 20;
     private int pontos = 0;
-    private int largura = 400;
-    private int altura = 300;
+    private int pontosMaximos = 0;
+    private int ritmo = 50; // deve estar em milissegundos
+
 
     public int larguraJanela;
     public int alturaJanela;
 
     // Método construtor
-    public Territorio(String nome) {
+    public Territorio(String nome, int largura, int altura, int pontosMaximos, int ritmo, int quantidadeInimigos) {
+
+        this.pontosMaximos = pontosMaximos;
+        this.larguraJanela = largura;
+        this.alturaJanela = altura;
+        this.ritmo = ritmo;
+
         // Criação da janela
         janela = new JFrame(nome);
         janela.add(this);
@@ -39,7 +46,7 @@ public class Territorio extends JPanel {
         jogador.posicaoInicial(30, alturaJanela / 2);
 
         // Criação dos inimigos
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < quantidadeInimigos; i++) {
             inimigos.add(new Jogador(Color.RED, this));
         }
 
@@ -99,14 +106,14 @@ public class Territorio extends JPanel {
             }
 
             // Mudar a condição para colisão do jogador principal com os inimigos
-            if (pontos == 150) {
+            if (pontos >= pontosMaximos) {
                 jogando = false;
             }
 
             repaint();    // Atualização da janela
 
             try {
-                Thread.sleep(50);    // Espera em milisegundos
+                Thread.sleep(ritmo);    // Espera em milisegundos
             }
             catch (Exception e) {
                 e.printStackTrace();

@@ -11,6 +11,7 @@ public class LeitorBotoes implements ActionListener{
         JButton origem = (JButton) e.getSource();
         switch(origem.getText()){
             case "Sair":
+                JOptionPane.showMessageDialog(origem, "Saindo do jogo");
                 System.exit(0);
                 break;
             case "Começar":
