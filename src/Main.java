@@ -1,7 +1,5 @@
-package src;
-
-import src.jogo.Territorio;
-import src.formulario.Formulario;
+import jogo.Territorio;
+import formulario.Formulario;
 
 public class Main {
 

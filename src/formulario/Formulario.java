@@ -1,8 +1,8 @@
-package src.formulario;
+package formulario;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
-import src.excecoes.*;
+import exceptions.*;
 
 public class Formulario{
     protected JFrame frame;

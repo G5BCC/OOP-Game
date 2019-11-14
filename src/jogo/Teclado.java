@@ -1,4 +1,4 @@
-package src.jogo;
+package jogo;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

@@ -1,4 +1,4 @@
-package src.formulario;
+package formulario;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
