@@ -60,7 +60,7 @@ public class Territorio extends JPanel {
         // Desenho da pontuação
         desenho.setColor(Color.GRAY);
         desenho.setFont(new Font("Verdana", Font.BOLD, 16));
-        desenho.drawString("Pontos: " + String.valueOf(pontos), 10, 30);
+        desenho.drawString("Pontos: " + pontos, 10, 30);
 
         if (jogador != null) {
             jogador.paint(g);

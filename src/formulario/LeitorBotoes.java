@@ -1,11 +1,18 @@
 package formulario;
 
+import exceptions.ExcecaoCamposNaoPreenchidos;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
-public class LeitorBotoes implements ActionListener{
+public class LeitorBotoes implements ActionListener {
+    private Formulario formulario;
+
+    public LeitorBotoes(Formulario form){
+        this.formulario = form;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e){
         JButton origem = (JButton) e.getSource();
@@ -16,6 +23,12 @@ public class LeitorBotoes implements ActionListener{
                 break;
             case "Começar":
                 JOptionPane.showMessageDialog(origem, "Começando jogo");
+
+                try{
+                    formulario.validarCampos();
+                } catch (ExcecaoCamposNaoPreenchidos ex){
+                    JOptionPane.showMessageDialog(origem, ex.getMessage());
+                }
                 break;
         }
     }
