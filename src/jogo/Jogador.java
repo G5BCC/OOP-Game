@@ -1,76 +1,83 @@
 package jogo;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Random;
 
-public class Jogador extends JComponent {
-    // Atributos
-    private Territorio territorio;
-    private Color cor;
-    private static final Random numeroAleatorio = new Random();
+public class Jogador extends Personagem {
+    private boolean left, right, up, down;
 
-    private int x = 450;
-    private int y = numeroAleatorio.nextInt(100 + 1);
-    private int altura = 30;
-    private int largura = 30;
-    public int diametro = largura;
-
-    // Construtor
     public Jogador(Color cor, Territorio territorio) {
-        this.cor = cor;
-        this.territorio = territorio;
-        this.x = territorio.larguraJanela + diametro;
+        super(cor, territorio);
+        this.x = 30;
+        this.y = territorio.alturaJanela / 2;
     }
 
-    // Método para desenhar o objeto
     public void paint(Graphics g) {
         Graphics2D desenho = (Graphics2D) g;
 
-        desenho.setColor(cor);
-        desenho.fillOval(x, y, largura, altura);
+        desenho.setColor(this.cor);
+        desenho.fillOval(this.x, this.y, this.largura, this.altura);
+
+        movement();
     }
 
-    // Método para ler teclas
     public void keyPressed(KeyEvent tecla) {
         switch (tecla.getKeyCode()) {
             case KeyEvent.VK_LEFT: {
-                x -= 5;
+                left = true;
                 break;
             }
             case KeyEvent.VK_RIGHT: {
-                x += 5;
+                right = true;
                 break;
             }
             case KeyEvent.VK_UP: {
-                y -= 5;
+                up = true;
                 break;
             }
             case KeyEvent.VK_DOWN: {
-                y += 5;
+                down = true;
                 break;
             }
         }
     }
 
-    // Posição inicial para o jogador principal
-    public void posicaoInicial(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public void keyReleased(KeyEvent tecla) {
+        switch (tecla.getKeyCode()) {
+            case KeyEvent.VK_LEFT: {
+                left = false;
+                break;
+            }
+            case KeyEvent.VK_RIGHT: {
+                right = false;
+                break;
+            }
+            case KeyEvent.VK_UP: {
+                up = false;
+                break;
+            }
+            case KeyEvent.VK_DOWN: {
+                down = false;
+                break;
+            }
+        }
     }
 
-    // Movimentação dos inimigos
-    public void moverX(int unidades) {
-        this.x -= unidades;
-    }
+    private void movement() {
+        if (left && this.x >= 5) {
+            this.x -= 5;
+        }
 
-    public int posicaoX() {
-        return x;
-    }
+        if (right && this.x <= territorio.larguraJanela - (2 * this.raio)) {
+            this.x += 5;
+        }
 
-    // Nova posição no eixo Y dos inimigos após desaparecerem na janela
-    public void novaPosicaoY() {
-        this.y = numeroAleatorio.nextInt(territorio.alturaJanela + 1);
+        if (up && this.y >= 5) {
+            this.y -= 5;
+        }
+
+        if (down && this.y <= territorio.alturaJanela - (2 * this.raio) - 2) {
+            this.y += 5;
+        }
     }
 }

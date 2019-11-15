@@ -4,13 +4,13 @@ import formulario.Formulario;
 public class Main {
 
     public static void main(String[] args) {
-        Formulario form = new Formulario();
+        //Formulario form = new Formulario();
 
-        if(form.comecarJogo()){
-            Territorio area = new Territorio("Jogo", form.getJanelaX(), form.getJanelaY(), form.getPontuacaoMaxima(), 
-            form.getRitmoJogo(), form.getQuantidadeObjetos());
+        //if(form.comecarJogo()){
+            Territorio area = new Territorio("Jogo", 800, 600, 1000000,
+            50, 5);
             area.jogar();
-        }
+        //}
         
     }
 }
