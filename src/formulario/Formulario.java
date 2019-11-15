@@ -8,14 +8,25 @@ public class Formulario{
     protected JFrame frame;
     private JPanel painel;
 
+    // Flags
+    private boolean camposOk = false;
+    private boolean flagComecarJogo = false;
+
     // Parâmetros para execução do jogo
     private int janelaX = 0;
     private int janelaY = 0;
     private int pontuacaoMaxima = 0;
     private int ritmoJogo = 0;
     private int quantidadeObjetos = 0;
+    private String nomeJogador = "";
 
-    private static boolean flagComecarJogo = false;
+    // Campos
+    private JTextField textFieldQuantidadeObjetos;
+    private JTextField textFieldPontuacaoMaxima;
+    private JTextField textFieldRitmoJogo;
+    private JTextField textFieldTamanhoX;
+    private JTextField textFieldTamanhoY;
+    private JTextField textFieldNomeJogador;
 
     public Formulario() {
         frame = new JFrame("teste");
@@ -25,13 +36,12 @@ public class Formulario{
 
         painel = new JPanel();
         frame.add(painel);
-         inserir_componentes(painel);
-        
+        inserir_componentes(painel);
 
         frame.setVisible(true);
     }
 
-    private static void inserir_componentes(JPanel panel) {
+    private void inserir_componentes(JPanel panel) {
         panel.setLayout(null);
 
         // Tamanho do território (janela)
@@ -48,8 +58,8 @@ public class Formulario{
         panel.add(labelTamanhoX);
         panel.add(labelTamanhoY);
 
-        JTextField textFieldTamanhoX = new JTextField(4);
-        JTextField textFieldTamanhoY = new JTextField(4);
+        textFieldTamanhoX = new JTextField(4);
+        textFieldTamanhoY = new JTextField(4);
 
         textFieldTamanhoX.setBounds(30, 50, 100, 25);
         textFieldTamanhoY.setBounds(30, 80, 100, 25);
@@ -62,7 +72,7 @@ public class Formulario{
         labelRitmoJogo.setBounds(180, 10, 100, 25);
         panel.add(labelRitmoJogo);
 
-        JTextField textFieldRitmoJogo = new JTextField(4);
+        textFieldRitmoJogo = new JTextField(4);
         textFieldRitmoJogo.setBounds(270, 10, 100, 25);
         panel.add(textFieldRitmoJogo);
 
@@ -71,7 +81,7 @@ public class Formulario{
         labelPontuacaoMaxima.setBounds(180, 35, 230, 25);
         panel.add(labelPontuacaoMaxima);
 
-        JTextField textFieldPontuacaoMaxima = new JTextField(4);
+        textFieldPontuacaoMaxima = new JTextField(4);
         textFieldPontuacaoMaxima.setBounds(360, 35, 100, 25);
         panel.add(textFieldPontuacaoMaxima);
 
@@ -80,29 +90,53 @@ public class Formulario{
         labelQuantidadeObjetos.setBounds(180, 55, 300, 25);
         panel.add(labelQuantidadeObjetos);
 
-        JTextField textFieldQuantidadeObjetos = new JTextField(4);
+        textFieldQuantidadeObjetos = new JTextField(4);
         textFieldQuantidadeObjetos.setBounds(180, 75, 100, 25);
         panel.add(textFieldQuantidadeObjetos);
+
+        // Jogador
+        JLabel labelNomeJogador = new JLabel("Nome: ");
+        labelNomeJogador.setBounds(30, 160, 100, 25);
+        panel.add(labelNomeJogador);
+
+        textFieldNomeJogador = new JTextField(20);
+        textFieldNomeJogador.setBounds(30, 180, 100, 25);
+        panel.add(textFieldNomeJogador);
 
         // Botões
         JButton botaoOK = new JButton("Começar");
         JButton botaoSair = new JButton("Sair");
-        
+
         botaoOK.setBounds(30, 200, 100, 30);
         botaoSair.setBounds(140, 200, 70, 30);
 
         panel.add(botaoOK);
         panel.add(botaoSair);
 
-        ActionListener leitorBotoes = new LeitorBotoes();
+        ActionListener leitorBotoes = new LeitorBotoes(this);
         botaoOK.addActionListener(leitorBotoes);
         botaoSair.addActionListener(leitorBotoes);
     }
 
-    public void verificarCamposPreenchidos() throws ExcecaoCamposNaoPreenchidos{
-
+    protected void validarCampos() throws ExcecaoCamposNaoPreenchidos{
+        if(textFieldPontuacaoMaxima.getText().length() <= 0
+            || textFieldQuantidadeObjetos.getText().length() <= 0
+            || textFieldRitmoJogo.getText().length() <= 0
+            || textFieldTamanhoX.getText().length() <= 0
+            || textFieldTamanhoY.getText().length() <= 0
+            || textFieldNomeJogador.getText().length() <= 0){
+            throw new ExcecaoCamposNaoPreenchidos("Faltou preencher um dos campos!");
+        } else {
+            this.janelaX = new Integer(textFieldTamanhoX.getText());
+            this.janelaY = new Integer(textFieldTamanhoY.getText());
+            this.quantidadeObjetos = new Integer(textFieldQuantidadeObjetos.getText());
+            this.pontuacaoMaxima = new Integer(textFieldPontuacaoMaxima.getText());
+            this.ritmoJogo = new Integer(textFieldRitmoJogo.getText());
+            this.nomeJogador = textFieldNomeJogador.getText();
+            JOptionPane.showMessageDialog(this.frame, "OK, " + nomeJogador +"! Vamos jogar!");
+            sairFormulario();
+        }
     }
-    
     public int getJanelaX(){
         return this.janelaX;
     }
@@ -123,7 +157,15 @@ public class Formulario{
         return this.quantidadeObjetos;
     }
 
-    public boolean comecarJogo(){
+    public boolean getEstadoJogo(){
         return flagComecarJogo;
+    }
+
+    public void setEstadoJogo(boolean estado){
+        flagComecarJogo = estado;
+    }
+
+    protected void sairFormulario(){
+        this.frame.dispose();
     }
 }
