@@ -11,36 +11,37 @@ public class Territorio extends JPanel {
     private Jogador jogador;
 
     private static int titulo = 20;
-    private int pontos = 0, pontosMaximos = 0;
-    private int ritmo = 50; // deve estar em milissegundos
+    private int pontos = 0;
+    private int pontosMaximos;
+    private int ritmo; // deve estar em milissegundos
+    private int quantidadeInimigos;
 
-    public int larguraJanela, alturaJanela;
+    public int larguraJanela;
+    public int alturaJanela;
 
     // Método construtor
-    public Territorio(String nome, int largura, int altura, int pontosMaximos, int ritmo, int quantidadeInimigos) {
-        this.pontosMaximos = pontosMaximos;
-        this.larguraJanela = largura;
-        this.alturaJanela = altura;
-        this.ritmo = ritmo;
-
+    public Territorio(String nome, int larguraJanela, int alturaJanela, int quantidadeInimigos, int pontosMaximos, int ritmo) {
         inimigos = new ArrayList<>();
+
+        this.larguraJanela = larguraJanela;
+        this.alturaJanela = alturaJanela;
+        this.quantidadeInimigos = quantidadeInimigos;
+        this.pontosMaximos = pontosMaximos;
+        this.ritmo = ritmo;
 
         // Criação da janela
         janela = new JFrame(nome);
         janela.add(this);
-        janela.setSize(largura, altura + titulo);
+        janela.setSize(larguraJanela, alturaJanela + titulo);
         janela.setResizable(false);
         janela.setVisible(true);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        larguraJanela = getWidth();
-        alturaJanela = getHeight();
 
         // Criação do jogador principal
         jogador = new Jogador(Color.BLUE, this);
 
         // Criação dos inimigos
-        for (int i = 0; i < quantidadeInimigos; i++) {
+        for (int i = 0; i < this.quantidadeInimigos; i++) {
             inimigos.add(new Inimigo(Color.RED, this));
         }
 
@@ -123,6 +124,6 @@ public class Territorio extends JPanel {
 
     private void game_over() {
         String mensagem = "Que pena! Você perdeu... Pelo menos acumulou " + pontos + " pontos!";
-        JOptionPane.showMessageDialog(this, mensagem, "Game Over", JOptionPane.YES_NO_OPTION);
+        JOptionPane.showMessageDialog(this, mensagem, "Game Over", JOptionPane.ERROR_MESSAGE);
     }
 }

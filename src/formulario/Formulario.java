@@ -2,15 +2,20 @@ package formulario;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
-import exceptions.*;
+import java.util.ArrayList;
+
+import exceptions.ExcecaoCamposNaoPreenchidos;
+import jogo.Territorio;
 
 public class Formulario{
     protected JFrame frame;
     private JPanel painel;
 
+    private Territorio territorio;
+
     // Flags
-    private boolean camposOk = false;
     private boolean flagComecarJogo = false;
+    private boolean camposOK = false;
 
     // Parâmetros para execução do jogo
     private int janelaX = 0;
@@ -28,6 +33,8 @@ public class Formulario{
     private JTextField textFieldTamanhoY;
     private JTextField textFieldNomeJogador;
 
+    ArrayList<JTextField> campos = new ArrayList<>();
+
     public Formulario() {
         frame = new JFrame("teste");
         frame.setSize(500, 300);
@@ -39,6 +46,13 @@ public class Formulario{
         inserir_componentes(painel);
 
         frame.setVisible(true);
+
+        campos.add(textFieldTamanhoX);
+        campos.add(textFieldTamanhoY);
+        campos.add(textFieldPontuacaoMaxima);
+        campos.add(textFieldNomeJogador);
+        campos.add(textFieldQuantidadeObjetos);
+        campos.add(textFieldRitmoJogo);
     }
 
     private void inserir_componentes(JPanel panel) {
@@ -119,24 +133,34 @@ public class Formulario{
     }
 
     protected void validarCampos() throws ExcecaoCamposNaoPreenchidos{
-        if(textFieldPontuacaoMaxima.getText().length() <= 0
-            || textFieldQuantidadeObjetos.getText().length() <= 0
-            || textFieldRitmoJogo.getText().length() <= 0
-            || textFieldTamanhoX.getText().length() <= 0
-            || textFieldTamanhoY.getText().length() <= 0
-            || textFieldNomeJogador.getText().length() <= 0){
-            throw new ExcecaoCamposNaoPreenchidos("Faltou preencher um dos campos!");
-        } else {
+        for(JTextField tf : campos){
+            if(!(tf.getText().length() <= 0)){
+                camposOK = true;
+            } else {
+                camposOK = false;
+            }
+        }
+
+        if(camposOK){
+            // Pegar valores dos campos de texto
             this.janelaX = new Integer(textFieldTamanhoX.getText());
             this.janelaY = new Integer(textFieldTamanhoY.getText());
             this.quantidadeObjetos = new Integer(textFieldQuantidadeObjetos.getText());
             this.pontuacaoMaxima = new Integer(textFieldPontuacaoMaxima.getText());
             this.ritmoJogo = new Integer(textFieldRitmoJogo.getText());
             this.nomeJogador = textFieldNomeJogador.getText();
+
+            // Começar o jogo
             JOptionPane.showMessageDialog(this.frame, "OK, " + nomeJogador +"! Vamos jogar!");
-            sairFormulario();
+            this.frame.setVisible(false);
+
+            Territorio area = new Territorio("Jogo", janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
+            area.jogar();
+        } else {
+            throw new ExcecaoCamposNaoPreenchidos("Faltou preencher um dos campos!");
         }
     }
+
     public int getJanelaX(){
         return this.janelaX;
     }
