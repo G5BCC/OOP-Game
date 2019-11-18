@@ -33,7 +33,7 @@ public class Territorio extends JPanel {
         janela = new JFrame(nome);
         janela.add(this);
         janela.setSize(larguraJanela, alturaJanela + titulo);
-        janela.setResizable(false);
+        janela.setResizable(true);
         janela.setVisible(true);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

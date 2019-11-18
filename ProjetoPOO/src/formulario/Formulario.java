@@ -3,7 +3,7 @@ package formulario;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import exceptions.*;
-import java.io*;
+import java.io.*;
 
 public class Formulario implements Serializable{
     transient protected JFrame frame;
@@ -134,42 +134,9 @@ public class Formulario implements Serializable{
             this.ritmoJogo = new Integer(textFieldRitmoJogo.getText());
             this.nomeJogador = textFieldNomeJogador.getText();
             JOptionPane.showMessageDialog(this.frame, "OK, " + nomeJogador +"! Vamos jogar!");
-            sairFormulario();
+            this.frame.setVisible(false);
         }
     }
-    public int getJanelaX(){
-        return this.janelaX;
-    }
-
-    public int getJanelaY(){
-        return this.janelaY;
-    }
-
-    public int getPontuacaoMaxima(){
-        return this.pontuacaoMaxima;
-    }
-
-    public int getRitmoJogo(){
-        return this.ritmoJogo;
-    }
-
-    public int getQuantidadeObjetos(){
-        return this.quantidadeObjetos;
-    }
-
-    public boolean getEstadoJogo(){
-        return flagComecarJogo;
-    }
-
-    public void setEstadoJogo(boolean estado){
-        flagComecarJogo = estado;
-    }
-
-    protected void sairFormulario(){
-        this.frame.dispose();
-    }
-
-
     public void salvar(String nome_arquivo){
         FileOutputStream arquivo = new FileOutputStream(nome_arquivo);
         ObjectOutputStream gravador = new ObjectOutputStream(arquivo);

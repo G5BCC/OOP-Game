@@ -132,7 +132,7 @@ public class Formulario{
         botaoSair.addActionListener(leitorBotoes);
     }
 
-    protected void validarCampos() throws ExcecaoCamposNaoPreenchidos{
+    public void validarCampos() throws ExcecaoCamposNaoPreenchidos{
         for(JTextField tf : campos){
             if(!(tf.getText().length() <= 0)){
                 camposOK = true;
@@ -149,47 +149,15 @@ public class Formulario{
             this.pontuacaoMaxima = new Integer(textFieldPontuacaoMaxima.getText());
             this.ritmoJogo = new Integer(textFieldRitmoJogo.getText());
             this.nomeJogador = textFieldNomeJogador.getText();
-
-            // Começar o jogo
-            JOptionPane.showMessageDialog(this.frame, "OK, " + nomeJogador +"! Vamos jogar!");
-            this.frame.setVisible(false);
-
-            Territorio area = new Territorio("Jogo", janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
-            area.jogar();
         } else {
             throw new ExcecaoCamposNaoPreenchidos("Faltou preencher um dos campos!");
         }
     }
 
-    public int getJanelaX(){
-        return this.janelaX;
-    }
-
-    public int getJanelaY(){
-        return this.janelaY;
-    }
-
-    public int getPontuacaoMaxima(){
-        return this.pontuacaoMaxima;
-    }
-
-    public int getRitmoJogo(){
-        return this.ritmoJogo;
-    }
-
-    public int getQuantidadeObjetos(){
-        return this.quantidadeObjetos;
-    }
-
-    public boolean getEstadoJogo(){
-        return flagComecarJogo;
-    }
-
-    public void setEstadoJogo(boolean estado){
-        flagComecarJogo = estado;
-    }
-
-    protected void sairFormulario(){
-        this.frame.dispose();
+    public void comecarJogo() {
+        this.frame.setVisible(false);
+        JOptionPane.showMessageDialog(this.frame, "OK, " + nomeJogador +"! Vamos jogar!");
+        this.territorio = new Territorio("Jogo de " + nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
+        territorio.jogar();
     }
 }
