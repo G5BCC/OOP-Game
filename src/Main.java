@@ -4,9 +4,8 @@ import jogo.Territorio;
 public class Main {
     public static void main(String[] args) {
         Formulario form = new Formulario("Formulário");
-        Territorio territorio;
+        Territorio area;
 
-        System.out.println("Validação");
         while (true) {
             int janelaX = form.getX();
             int janelaY = form.getY();
@@ -16,14 +15,14 @@ public class Main {
             String nomeJogador = form.getNomeJogador();
 
             if (form.validacao) {
-                territorio = new Territorio(nomeJogador, janelaX, janelaY, quantidadeInimigos, pontuacaoMaxima, ritmoJogo);
-                System.out.println("OK");
+                area = new Territorio(nomeJogador, janelaX, janelaY, quantidadeInimigos, pontuacaoMaxima, ritmoJogo);
                 break;
             }
             else {
-                System.out.println("");
+                System.out.println();
             }
         }
-        territorio.jogar();
+
+        area.jogar();
     }
 }

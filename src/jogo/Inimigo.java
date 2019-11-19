@@ -23,10 +23,6 @@ public class Inimigo extends Personagem {
         this.x -= unidades;
     }
 
-    public int getX() {
-        return this.x;
-    }
-
     public void setY() {
         int positionY = numeroAleatorio.nextInt(territorio.alturaJanela + 1);
 
@@ -36,9 +32,5 @@ public class Inimigo extends Personagem {
         }
 
         this.y = positionY;
-    }
-
-    public int getY() {
-        return this.y;
     }
 }

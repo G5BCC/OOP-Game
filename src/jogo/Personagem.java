@@ -18,4 +18,12 @@ abstract public class Personagem extends JComponent {
         this.cor = cor;
         this.territorio = territorio;
     }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
 }
