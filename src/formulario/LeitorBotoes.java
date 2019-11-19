@@ -1,7 +1,8 @@
 package formulario;
 
 import exceptions.ExcecaoCamposNaoPreenchidos;
-
+import java.io.Serializable;
+import java.io.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;

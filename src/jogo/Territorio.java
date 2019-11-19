@@ -3,6 +3,7 @@ package jogo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Territorio extends JPanel {
@@ -18,6 +19,8 @@ public class Territorio extends JPanel {
 
     // Método construtor
     public Territorio(String nome, int larguraJanela, int alturaJanela, int quantidadeInimigos, int pontosMaximos, int ritmo) {
+        System.out.println("Criando território " + nome);
+
         this.larguraJanela = larguraJanela;
         this.alturaJanela = alturaJanela;
         this.quantidadeInimigos = quantidadeInimigos;
@@ -152,5 +155,13 @@ public class Territorio extends JPanel {
         }
 
         JOptionPane.showMessageDialog(this, mensagem, "Game Over", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void salvar(String nomeArquivo) throws IOException {
+        jogador.salvar(nomeArquivo);
+    }
+
+    public Jogador abrir(String nomeArquivo) throws IOException, ClassNotFoundException {
+        return jogador.abrir(nomeArquivo);
     }
 }
