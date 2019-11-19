@@ -5,16 +5,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import exceptions.ExcecaoCamposNaoPreenchidos;
-import jogo.Territorio;
 
 public class Formulario{
     protected JFrame frame;
     private JPanel painel;
 
-    private Territorio territorio;
-
     // Flags
-    private boolean flagComecarJogo = false;
     private boolean camposOK = false;
 
     // Parâmetros para execução do jogo
@@ -35,10 +31,10 @@ public class Formulario{
 
     ArrayList<JTextField> campos = new ArrayList<>();
 
-    public Formulario() {
-        frame = new JFrame("teste");
+    public Formulario(String tituloFormulario) {
+        frame = new JFrame(tituloFormulario);
         frame.setSize(500, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setResizable(false);
 
         painel = new JPanel();
@@ -132,7 +128,7 @@ public class Formulario{
         botaoSair.addActionListener(leitorBotoes);
     }
 
-    public void validarCampos() throws ExcecaoCamposNaoPreenchidos{
+    public void validarCampos() throws ExcecaoCamposNaoPreenchidos {
         for(JTextField tf : campos){
             if(!(tf.getText().length() <= 0)){
                 camposOK = true;
@@ -149,15 +145,40 @@ public class Formulario{
             this.pontuacaoMaxima = new Integer(textFieldPontuacaoMaxima.getText());
             this.ritmoJogo = new Integer(textFieldRitmoJogo.getText());
             this.nomeJogador = textFieldNomeJogador.getText();
+
+            JOptionPane.showMessageDialog(frame, "Tudo bem, " + this.nomeJogador + " o jogo irá começar!");
+            this.frame.setVisible(false);
         } else {
             throw new ExcecaoCamposNaoPreenchidos("Faltou preencher um dos campos!");
         }
+
     }
 
-    public void comecarJogo() {
-        this.frame.setVisible(false);
-        JOptionPane.showMessageDialog(this.frame, "OK, " + nomeJogador +"! Vamos jogar!");
-        this.territorio = new Territorio("Jogo de " + nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
-        territorio.jogar();
+    public int getX(){
+        return janelaX;
+    }
+
+    public int getY(){
+        return janelaY;
+    }
+
+    public int getQuantidadeObjetos(){
+        return quantidadeObjetos;
+    }
+
+    public int getRitmoJogo(){
+        return ritmoJogo;
+    }
+
+    public int getPontuacaoMaxima(){
+        return pontuacaoMaxima;
+    }
+
+    public String getNomeJogador(){
+        return nomeJogador;
+    }
+
+    public boolean getFlagCamposOK(){
+        return this.camposOK;
     }
 }

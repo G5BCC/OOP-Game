@@ -21,8 +21,9 @@ public class LeitorBotoes implements ActionListener {
                 JOptionPane.showMessageDialog(origem, "Saindo do jogo");
                 System.exit(0);
                 break;
+
             case "Começar":
-                try{
+                try {
                     formulario.validarCampos();
                 } catch (ExcecaoCamposNaoPreenchidos ex){
                     JOptionPane.showMessageDialog(origem, ex.getMessage());
