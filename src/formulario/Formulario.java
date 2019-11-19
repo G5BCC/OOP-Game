@@ -10,28 +10,19 @@ import jogo.Territorio;
 public class Formulario{
     protected JFrame frame;
     private JPanel painel;
-
-    private Territorio territorio;
+    public Territorio territorio;
 
     // Flags
-    private boolean flagComecarJogo = false;
     private boolean camposOK = false;
+    public boolean validacao = false;
 
     // Parâmetros para execução do jogo
-    private int janelaX = 0;
-    private int janelaY = 0;
-    private int pontuacaoMaxima = 0;
-    private int ritmoJogo = 0;
-    private int quantidadeObjetos = 0;
-    private String nomeJogador = "";
+    public int janelaX = 0, janelaY = 0, pontuacaoMaxima = 0, ritmoJogo = 0, quantidadeObjetos = 0;
+    public String nomeJogador = "";
 
     // Campos
-    private JTextField textFieldQuantidadeObjetos;
-    private JTextField textFieldPontuacaoMaxima;
-    private JTextField textFieldRitmoJogo;
-    private JTextField textFieldTamanhoX;
-    private JTextField textFieldTamanhoY;
-    private JTextField textFieldNomeJogador;
+    private JTextField textFieldQuantidadeObjetos, textFieldPontuacaoMaxima, textFieldRitmoJogo, textFieldTamanhoX,
+            textFieldTamanhoY, textFieldNomeJogador;
 
     ArrayList<JTextField> campos = new ArrayList<>();
 
@@ -149,15 +140,13 @@ public class Formulario{
             this.pontuacaoMaxima = new Integer(textFieldPontuacaoMaxima.getText());
             this.ritmoJogo = new Integer(textFieldRitmoJogo.getText());
             this.nomeJogador = textFieldNomeJogador.getText();
+            this.frame.setVisible(false);
+
+            JOptionPane.showMessageDialog(this.frame, "OK, " + nomeJogador +"! Vamos jogar!");
+
+            validacao = true;
         } else {
             throw new ExcecaoCamposNaoPreenchidos("Faltou preencher um dos campos!");
         }
-    }
-
-    public void comecarJogo() {
-        this.frame.setVisible(false);
-        JOptionPane.showMessageDialog(this.frame, "OK, " + nomeJogador +"! Vamos jogar!");
-        this.territorio = new Territorio("Jogo de " + nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
-        territorio.jogar();
     }
 }
