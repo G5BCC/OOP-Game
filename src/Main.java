@@ -1,4 +1,3 @@
-import exceptions.ExcecaoCamposNaoPreenchidos;
 import formulario.Formulario;
 import jogo.Territorio;
 
@@ -7,16 +6,24 @@ public class Main {
         Formulario form = new Formulario("Formulário");
         Territorio territorio;
 
-        int janelaX = form.getX();
-        int janelaY = form.getY();
-        int ritmoJogo = form.getRitmoJogo();
-        int quantidadeInimigos = form.getQuantidadeObjetos();
-        int pontuacaoMaxima = form.getPontuacaoMaxima();
-        String nomeJogador = form.getNomeJogador();
+        System.out.println("Validação");
+        while (true) {
+            int janelaX = form.getX();
+            int janelaY = form.getY();
+            int ritmoJogo = form.getRitmoJogo();
+            int quantidadeInimigos = form.getQuantidadeObjetos();
+            int pontuacaoMaxima = form.getPontuacaoMaxima();
+            String nomeJogador = form.getNomeJogador();
 
-        if(form.getFlagCamposOK()){
-            territorio = new Territorio("Jogo de " + nomeJogador, janelaX, janelaY, pontuacaoMaxima, quantidadeInimigos, ritmoJogo);
-            territorio.jogar();
+            if (form.validacao) {
+                territorio = new Territorio(nomeJogador, janelaX, janelaY, quantidadeInimigos, pontuacaoMaxima, ritmoJogo);
+                System.out.println("OK");
+                break;
+            }
+            else {
+                System.out.println("");
+            }
         }
+        territorio.jogar();
     }
 }

@@ -21,6 +21,7 @@ public class Territorio extends JPanel {
 
     // Método construtor
     public Territorio(String nome, int larguraJanela, int alturaJanela, int quantidadeInimigos, int pontosMaximos, int ritmo) {
+        System.out.println("Criando");
         inimigos = new ArrayList<>();
 
         this.larguraJanela = larguraJanela;
