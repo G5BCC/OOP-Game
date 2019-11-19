@@ -2,6 +2,7 @@ package jogo;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 abstract public class Personagem extends JComponent {
 
@@ -11,6 +12,9 @@ abstract public class Personagem extends JComponent {
     protected int x, y;
     protected int altura = 30, largura = 30;
     protected int raio = largura / 2;
+
+    abstract public void salvar(String nomeArquivo) throws IOException;
+    abstract public Jogador abrir(String nomeArquivo) throws  IOException, ClassNotFoundException;
 
     abstract public void paint(Graphics g);
 

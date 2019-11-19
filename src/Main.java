@@ -1,12 +1,14 @@
 import formulario.Formulario;
 import jogo.Territorio;
 
+import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) {
         Formulario form = new Formulario("Formulário");
         Territorio territorio;
-
-        System.out.println("Validação");
+        String nomeArquivo = "Jogador.jgd";
+        
         while (true) {
             int janelaX = form.getX();
             int janelaY = form.getY();
@@ -17,10 +19,8 @@ public class Main {
 
             if (form.validacao) {
                 territorio = new Territorio(nomeJogador, janelaX, janelaY, quantidadeInimigos, pontuacaoMaxima, ritmoJogo);
-                System.out.println("OK");
                 break;
-            }
-            else {
+            } else {
                 System.out.println("");
             }
         }
