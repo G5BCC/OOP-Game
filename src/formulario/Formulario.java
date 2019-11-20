@@ -6,6 +6,9 @@ import java.io.*;
 import java.util.ArrayList;
 
 import exceptions.ExcecaoCamposNaoPreenchidos;
+import jogo.Dados;
+import jogo.Personagem;
+import jogo.Territorio;
 
 public class Formulario{
     protected JFrame frame;
@@ -13,7 +16,7 @@ public class Formulario{
 
     // Flags
     private boolean camposOK = false;
-    public boolean validacao = false;
+    private boolean validacao = false;
 
     // Parâmetros para execução do jogo
     private int janelaX = 0, janelaY = 0, pontuacaoMaxima = 0, ritmoJogo = 0, quantidadeObjetos = 0;
@@ -28,7 +31,7 @@ public class Formulario{
     public Formulario(String tituloFormulario) {
         frame = new JFrame(tituloFormulario);
         frame.setSize(500, 300);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
         painel = new JPanel();
@@ -110,16 +113,20 @@ public class Formulario{
         // Botões
         JButton botaoOK = new JButton("Começar");
         JButton botaoSair = new JButton("Sair");
+        JButton botaoCarregar = new JButton("Carregar");
 
         botaoOK.setBounds(120, 220, 100, 30);
         botaoSair.setBounds(260, 220, 100, 30);
+        botaoCarregar.setBounds(360, 220, 100, 30);
 
         panel.add(botaoOK);
         panel.add(botaoSair);
+        panel.add(botaoCarregar);
 
         ActionListener leitorBotoes = new LeitorBotoes(this);
         botaoOK.addActionListener(leitorBotoes);
         botaoSair.addActionListener(leitorBotoes);
+        botaoCarregar.addActionListener(leitorBotoes);
     }
 
     public void validarCampos() throws ExcecaoCamposNaoPreenchidos {
@@ -141,14 +148,36 @@ public class Formulario{
             this.nomeJogador = textFieldNomeJogador.getText();
             this.frame.setFocusable(false);
             this.frame.setVisible(false);
-            this.validacao = true;
 
             JOptionPane.showMessageDialog(this.frame, "OK, " + nomeJogador +"! Vamos jogar!");
+            this.validacao = true;
 
         } else {
             throw new ExcecaoCamposNaoPreenchidos("Faltou preencher um dos campos!");
         }
+    }
 
+    public void salvar(String nomeArquivo) throws IOException{
+        FileOutputStream arquivo = new FileOutputStream(nomeArquivo);
+        ObjectOutputStream gravador = new ObjectOutputStream(arquivo);
+
+        Territorio test;
+        test = new Dados("Jogo de " + nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
+        test.salvar(nomeArquivo);
+    }
+
+    public Dados abrir(String nomeArquivo) throws IOException, ClassNotFoundException{
+        Dados territorio = null;
+
+        FileInputStream arquivo = new FileInputStream(nomeArquivo);
+        ObjectInputStream restaurador = new ObjectInputStream(arquivo);
+
+        territorio = (Dados) restaurador.readObject();
+
+        restaurador.close();
+        arquivo.close();
+
+        return territorio;
     }
 
     public int getX(){
@@ -173,5 +202,13 @@ public class Formulario{
 
     public String getNomeJogador(){
         return nomeJogador;
+    }
+
+    public boolean getValidacao(){
+        return validacao;
+    }
+
+    public void sairFormulario(){
+        this.frame.dispose();
     }
 }

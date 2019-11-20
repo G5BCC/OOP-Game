@@ -32,7 +32,6 @@ public class Territorio extends JPanel {
         janela.add(this);
         janela.setSize(larguraJanela, alturaJanela + titulo);
         janela.setResizable(true);
-        janela.setVisible(true);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Criação do jogador principal
@@ -57,10 +56,15 @@ public class Territorio extends JPanel {
         Graphics2D desenho = (Graphics2D) g;
         desenho.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Desenho da pontuação
+        // Desenho da pontuação atual
         desenho.setColor(Color.GRAY);
         desenho.setFont(new Font("cursive", Font.BOLD, 16));
         desenho.drawString("Pontos: " + pontos, 10, 30);
+
+        // Desenho da pontuação máxima
+        desenho.setColor(Color.GRAY);
+        desenho.setFont(new Font("cursive", Font.BOLD, 16));
+        desenho.drawString("Pontuação máxima: " + pontosMaximos, larguraJanela - 250, 30);
 
         if (jogador != null) {
             jogador.paint(g);
@@ -85,6 +89,7 @@ public class Territorio extends JPanel {
     // Método para iniciar o jogo
     public void jogar() {
         boolean play = true;
+        janela.setVisible(true);
 
         while (play) {
             // Captura das dimensões da janela

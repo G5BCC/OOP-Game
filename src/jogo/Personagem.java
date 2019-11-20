@@ -14,7 +14,7 @@ abstract public class Personagem extends JComponent {
     protected int raio = largura / 2;
 
     abstract public void salvar(String nomeArquivo) throws IOException;
-    abstract public Jogador abrir(String nomeArquivo) throws  IOException, ClassNotFoundException;
+    abstract public Personagem abrir(String nomeArquivo) throws  IOException, ClassNotFoundException;
 
     abstract public void paint(Graphics g);
 
