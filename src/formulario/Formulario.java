@@ -6,17 +6,16 @@ import java.io.*;
 import java.util.ArrayList;
 
 import exceptions.ExcecaoCamposNaoPreenchidos;
+import formulario.botoes.*;
 import jogo.Dados;
-import jogo.Personagem;
 import jogo.Territorio;
 
 public class Formulario{
-    protected JFrame frame;
+    private JFrame frame;
     private JPanel painel;
 
-    // Flags
-    private boolean camposOK = false;
-    private boolean validacao = false;
+    //Flags
+    private boolean flagComecarJogo = false;
 
     // Parâmetros para execução do jogo
     private int janelaX = 0, janelaY = 0, pontuacaoMaxima = 0, ritmoJogo = 0, quantidadeObjetos = 0;
@@ -50,7 +49,6 @@ public class Formulario{
 
     private void inserir_componentes(JPanel panel) {
         panel.setLayout(null);
-
         // Tamanho do território (janela)
         JLabel labelTamanhoInicialTerritorio = new JLabel("Tamanho inicial do território");
         labelTamanhoInicialTerritorio.setBounds(10, 10, 200, 25);
@@ -111,9 +109,13 @@ public class Formulario{
         panel.add(textFieldNomeJogador);
 
         // Botões
-        JButton botaoOK = new JButton("Começar");
-        JButton botaoSair = new JButton("Sair");
-        JButton botaoCarregar = new JButton("Carregar");
+        JButton botaoOK;
+        JButton botaoSair;
+        JButton botaoCarregar;
+
+        botaoOK = new JButton("Começar");
+        botaoSair = new JButton("Sair");
+        botaoCarregar = new JButton("Carregar");
 
         botaoOK.setBounds(120, 220, 100, 30);
         botaoSair.setBounds(260, 220, 100, 30);
@@ -123,13 +125,18 @@ public class Formulario{
         panel.add(botaoSair);
         panel.add(botaoCarregar);
 
-        ActionListener leitorBotoes = new LeitorBotoes(this);
-        botaoOK.addActionListener(leitorBotoes);
-        botaoSair.addActionListener(leitorBotoes);
-        botaoCarregar.addActionListener(leitorBotoes);
+        ActionListener leitorOK = new LeitorBotoesComecar(this);
+        ActionListener leitorSair = new LeitorBotoesSair(this);
+        ActionListener leitorCarregar = new LeitorBotoesCarregar(this);
+
+        botaoOK.addActionListener(leitorOK);
+        botaoSair.addActionListener(leitorSair);
+        botaoCarregar.addActionListener(leitorCarregar);
+
     }
 
-    public void validarCampos() throws ExcecaoCamposNaoPreenchidos {
+    private void validarCampos() throws ExcecaoCamposNaoPreenchidos {
+        boolean camposOK = false;
         for(JTextField campo : listaCampos){
             if(campo.getText().length() > 0){
                 camposOK = true;
@@ -146,13 +153,9 @@ public class Formulario{
             this.pontuacaoMaxima = new Integer(textFieldPontuacaoMaxima.getText());
             this.ritmoJogo = new Integer(textFieldRitmoJogo.getText());
             this.nomeJogador = textFieldNomeJogador.getText();
-            this.frame.setFocusable(false);
-            this.frame.setVisible(false);
-
-            JOptionPane.showMessageDialog(this.frame, "OK, " + nomeJogador +"! Vamos jogar!");
-            this.validacao = true;
-
+            flagComecarJogo = true;
         } else {
+            flagComecarJogo = false;
             throw new ExcecaoCamposNaoPreenchidos("Faltou preencher um dos campos!");
         }
     }
@@ -180,35 +183,30 @@ public class Formulario{
         return territorio;
     }
 
-    public int getX(){
-        return janelaX;
+    public void comecarJogo(){
+        if(flagComecarJogo){
+            this.frame.setVisible(false);
+            new Territorio(nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
+        } else {
+            try {
+                validarCampos();
+            } catch (ExcecaoCamposNaoPreenchidos e) {
+                JOptionPane.showMessageDialog(frame, e.getMessage());
+            }
+        }
     }
 
-    public int getY(){
-        return janelaY;
-    }
-
-    public int getQuantidadeObjetos(){
-        return quantidadeObjetos;
-    }
-
-    public int getRitmoJogo(){
-        return ritmoJogo;
-    }
-
-    public int getPontuacaoMaxima(){
-        return pontuacaoMaxima;
+    public void sairFormulario(){
+        switch (JOptionPane.showConfirmDialog(frame, "Deseja mesmo sair?", "Sair", JOptionPane.YES_NO_OPTION)){
+            case 0:
+                System.exit(1);
+                break;
+            default:
+                break;
+        }
     }
 
     public String getNomeJogador(){
         return nomeJogador;
-    }
-
-    public boolean getValidacao(){
-        return validacao;
-    }
-
-    public void sairFormulario(){
-        this.frame.dispose();
     }
 }

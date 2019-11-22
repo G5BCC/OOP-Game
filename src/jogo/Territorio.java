@@ -32,6 +32,7 @@ public class Territorio extends JPanel {
         janela.add(this);
         janela.setSize(larguraJanela, alturaJanela + titulo);
         janela.setResizable(true);
+        janela.setVisible(true);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Criação do jogador principal
