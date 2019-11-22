@@ -21,7 +21,7 @@ public class LeitorBotoesComecar implements ActionListener {
     public void actionPerformed(ActionEvent e){
         JButton origem = (JButton) e.getSource();
         try{
-            caminho = new File(".").getCanonicalPath();;
+            caminho = new File(".").getCanonicalPath() + "/saves/";
             formulario.comecarJogo();
             formulario.salvar(caminho + formulario.getNomeJogador() + ".trt");
         } catch (IOException ex){
