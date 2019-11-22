@@ -25,7 +25,7 @@
 - [X] **8.** As classes A e B devem ser derivadas de uma mesma classe abstrata C.
 - [X] **9.** A classe C deve definir um método abstrato, ao menos.
 - [X] **10.** Deve haver ao menos uma classe derivada da classe Exception.
-- [ ] **11.** Os parâmetros devem ser configuráveis através de interface gráfica baseada em formulário e devem ser armazenados como objetos persistentes.
+- [X] **11.** Os parâmetros devem ser configuráveis através de interface gráfica baseada em formulário e devem ser armazenados como objetos persistentes.
 ---
 # Resumo:
 - Personagem principal: pode se mover
