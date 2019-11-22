@@ -1,8 +1,6 @@
 package formulario.botoes;
 
-import exceptions.ExcecaoCamposNaoPreenchidos;
 import formulario.Formulario;
-import jogo.Territorio;
 
 import java.io.*;
 import java.awt.event.ActionEvent;

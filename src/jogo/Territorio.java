@@ -11,16 +11,21 @@ public class Territorio extends JPanel {
     private JFrame janela;
     private Jogador jogador;
 
-    private static int titulo = 20;
-    private int pontos = 0, pontosMaximos, ritmo, quantidadeInimigos;
+    protected static int titulo = 20;
+    protected int pontos = 0;
+    protected int pontosMaximos;
+    protected int ritmo;
+    protected int quantidadeInimigos;
+    protected String nome;
     private boolean fim;
 
-    public int larguraJanela, alturaJanela;
+    protected int larguraJanela, alturaJanela;
 
     // Método construtor
     public Territorio(String nome, int larguraJanela, int alturaJanela, int quantidadeInimigos, int pontosMaximos, int ritmo) {
         System.out.println("Criando território " + nome);
 
+        this.nome = nome;
         this.larguraJanela = larguraJanela;
         this.alturaJanela = alturaJanela;
         this.quantidadeInimigos = quantidadeInimigos;
@@ -32,7 +37,6 @@ public class Territorio extends JPanel {
         janela.add(this);
         janela.setSize(larguraJanela, alturaJanela + titulo);
         janela.setResizable(true);
-        janela.setVisible(true);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Criação do jogador principal
@@ -100,8 +104,8 @@ public class Territorio extends JPanel {
             pontos++;
 
             // Muda a posição dos inimigos no eixo X
-            for (int i = 0; i < listaInimigos.size(); i++) {
-                listaInimigos.get(i).setX(5);
+            for (Inimigo listaInimigo : listaInimigos) {
+                listaInimigo.setX(5);
             }
 
             // Criação de mais inimigos a cada 150 pontos
@@ -163,11 +167,7 @@ public class Territorio extends JPanel {
         JOptionPane.showMessageDialog(this, mensagem, "Game Over", JOptionPane.ERROR_MESSAGE);
     }
 
-    public void salvar(String nomeArquivo) throws IOException {
-        jogador.salvar(nomeArquivo);
-    }
-
-    public Jogador abrir(String nomeArquivo) throws IOException, ClassNotFoundException {
-        return jogador.abrir(nomeArquivo);
+    public String getNome(){
+        return this.nome;
     }
 }

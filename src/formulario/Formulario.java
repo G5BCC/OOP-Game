@@ -12,7 +12,6 @@ import jogo.Territorio;
 
 public class Formulario{
     private JFrame frame;
-    private JPanel painel;
 
     //Flags
     private boolean flagComecarJogo = false;
@@ -27,13 +26,15 @@ public class Formulario{
 
     private ArrayList<JTextField> listaCampos;
 
+    private Dados dados;
+
     public Formulario(String tituloFormulario) {
         frame = new JFrame(tituloFormulario);
         frame.setSize(500, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
-        painel = new JPanel();
+        JPanel painel = new JPanel();
         frame.add(painel);
         inserir_componentes(painel);
         frame.setVisible(true);
@@ -147,11 +148,11 @@ public class Formulario{
 
         if(camposOK){
             // Pegar valores dos campos de texto
-            this.janelaX = new Integer(textFieldTamanhoX.getText());
-            this.janelaY = new Integer(textFieldTamanhoY.getText());
-            this.quantidadeObjetos = new Integer(textFieldQuantidadeObjetos.getText());
-            this.pontuacaoMaxima = new Integer(textFieldPontuacaoMaxima.getText());
-            this.ritmoJogo = new Integer(textFieldRitmoJogo.getText());
+            this.janelaX = Integer.parseInt(textFieldTamanhoX.getText());
+            this.janelaY = Integer.parseInt(textFieldTamanhoY.getText());
+            this.quantidadeObjetos = Integer.parseInt(textFieldQuantidadeObjetos.getText());
+            this.pontuacaoMaxima = Integer.parseInt(textFieldPontuacaoMaxima.getText());
+            this.ritmoJogo = Integer.parseInt(textFieldRitmoJogo.getText());
             this.nomeJogador = textFieldNomeJogador.getText();
             flagComecarJogo = true;
         } else {
@@ -161,32 +162,18 @@ public class Formulario{
     }
 
     public void salvar(String nomeArquivo) throws IOException{
-        FileOutputStream arquivo = new FileOutputStream(nomeArquivo);
-        ObjectOutputStream gravador = new ObjectOutputStream(arquivo);
-
-        Territorio test;
-        test = new Dados("Jogo de " + nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
-        test.salvar(nomeArquivo);
+        dados = new Dados(nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
+        dados.salvar(nomeArquivo);
     }
 
     public Dados abrir(String nomeArquivo) throws IOException, ClassNotFoundException{
-        Dados territorio = null;
-
-        FileInputStream arquivo = new FileInputStream(nomeArquivo);
-        ObjectInputStream restaurador = new ObjectInputStream(arquivo);
-
-        territorio = (Dados) restaurador.readObject();
-
-        restaurador.close();
-        arquivo.close();
-
-        return territorio;
+        return dados.abrir(nomeArquivo);
     }
 
     public void comecarJogo(){
         if(flagComecarJogo){
             this.frame.setVisible(false);
-            new Territorio(nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
+            new Territorio(nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo).jogar();
         } else {
             try {
                 validarCampos();
@@ -197,12 +184,8 @@ public class Formulario{
     }
 
     public void sairFormulario(){
-        switch (JOptionPane.showConfirmDialog(frame, "Deseja mesmo sair?", "Sair", JOptionPane.YES_NO_OPTION)){
-            case 0:
-                System.exit(1);
-                break;
-            default:
-                break;
+        if (JOptionPane.showConfirmDialog(frame, "Deseja mesmo sair?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
+            System.exit(1);
         }
     }
 
