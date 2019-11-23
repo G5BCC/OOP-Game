@@ -14,7 +14,8 @@ public class Formulario{
     private JFrame frame;
 
     //Flags
-    private boolean flagComecarJogo = false;
+    public boolean flagComecarJogo = false;
+    public Territorio territorio;
 
     // Parâmetros para execução do jogo
     private int janelaX = 0, janelaY = 0, pontuacaoMaxima = 0, ritmoJogo = 0, quantidadeObjetos = 0;
@@ -138,11 +139,13 @@ public class Formulario{
 
     private void validarCampos() throws ExcecaoCamposNaoPreenchidos {
         boolean camposOK = false;
+
         for(JTextField campo : listaCampos){
             if(campo.getText().length() > 0){
                 camposOK = true;
             } else {
                 camposOK = false;
+                break;
             }
         }
 
@@ -154,6 +157,8 @@ public class Formulario{
             this.pontuacaoMaxima = Integer.parseInt(textFieldPontuacaoMaxima.getText());
             this.ritmoJogo = Integer.parseInt(textFieldRitmoJogo.getText());
             this.nomeJogador = textFieldNomeJogador.getText();
+            this.frame.setVisible(false);
+
             flagComecarJogo = true;
         } else {
             flagComecarJogo = false;
@@ -161,25 +166,12 @@ public class Formulario{
         }
     }
 
-    public void salvar(String nomeArquivo) throws IOException{
-        dados = new Dados(nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
-        dados.salvar(nomeArquivo);
-    }
-
-    public Dados abrir(String nomeArquivo) throws IOException, ClassNotFoundException{
-        return dados.abrir(nomeArquivo);
-    }
-
-    public void comecarJogo(){
-        if(flagComecarJogo){
-            this.frame.setVisible(false);
-            new Territorio(nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo).jogar();
-        } else {
-            try {
-                validarCampos();
-            } catch (ExcecaoCamposNaoPreenchidos e) {
-                JOptionPane.showMessageDialog(frame, e.getMessage());
-            }
+    public void comecarJogo() {
+        try {
+            validarCampos();
+        }
+        catch (ExcecaoCamposNaoPreenchidos e) {
+            JOptionPane.showMessageDialog(frame, e.getMessage());
         }
     }
 
@@ -189,7 +181,22 @@ public class Formulario{
         }
     }
 
-    public String getNomeJogador(){
+    public void criarTerritorio() throws IOException {
+        salvar();
+        new Territorio(nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo).jogar();
+    }
+
+    private String getNomeJogador(){
         return nomeJogador;
+    }
+
+    private void salvar() throws IOException {
+        String caminho = new File(".").getCanonicalPath() + "/saves/";
+        dados = new Dados(nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
+        dados.salvar(caminho + getNomeJogador() + ".trt");
+    }
+
+    public Dados abrir(String nomeArquivo) throws IOException, ClassNotFoundException{
+        return dados.abrir(nomeArquivo);
     }
 }

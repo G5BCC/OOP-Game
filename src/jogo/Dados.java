@@ -4,7 +4,8 @@ import java.io.*;
 
 public class Dados extends Territorio {
 
-    public Dados(String nome, int larguraJanela, int alturaJanela, int quantidadeInimigos, int pontosMaximos, int ritmo) {
+    public Dados(String nome, int larguraJanela, int alturaJanela, int quantidadeInimigos, int pontosMaximos, int ritmo)
+    {
         super(nome, larguraJanela, alturaJanela, quantidadeInimigos, pontosMaximos, ritmo);
     }
 
@@ -31,29 +32,5 @@ public class Dados extends Territorio {
         arquivo.close();
 
         return dados;
-    }
-
-    public int getLargura(){
-        return this.larguraJanela;
-    }
-
-    public int getAltura(){
-        return this.alturaJanela;
-    }
-
-    public int getQuantInimigos(){
-        return this.quantidadeInimigos;
-    }
-
-    public int getPontuacaoMax(){
-        return this.pontosMaximos;
-    }
-
-    public int getRitmoJogo(){
-        return this.ritmo;
-    }
-
-    public String getNome(){
-        return this.nome;
     }
 }

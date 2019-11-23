@@ -1,21 +1,18 @@
 import formulario.Formulario;
 import jogo.Dados;
+import jogo.Territorio;
+
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, IOException {
         Formulario form = new Formulario("Formulário");
-        String caminho = "/home/pedrohorchulhack/Documents/Repositories/ProjetoPOO/saves/Pedasd.trt";
 
-        try {
-            Dados dados = form.abrir(caminho);
-            System.out.println(dados.getLargura());
-            System.out.println(dados.getAltura());
-            System.out.println(dados.getNome());
-            System.out.println(dados.getPontuacaoMax());
-            System.out.println(dados.getQuantInimigos());
-            System.out.println(dados.getRitmoJogo());
-        } catch (Exception e){
-            e.printStackTrace();
+        while(!form.flagComecarJogo) {
+            Thread.sleep(1000);    // Verificando o formulário a cada 1 segundo
         }
+
+        System.out.println("Ok no Main");
+        form.criarTerritorio();
     }
 }

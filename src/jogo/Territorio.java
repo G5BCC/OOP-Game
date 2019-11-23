@@ -3,7 +3,6 @@ package jogo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Territorio extends JPanel {
@@ -17,13 +16,13 @@ public class Territorio extends JPanel {
     protected int ritmo;
     protected int quantidadeInimigos;
     protected String nome;
-    private boolean fim;
+    private boolean tipoFim;
 
     protected int larguraJanela, alturaJanela;
 
     // Método construtor
     public Territorio(String nome, int larguraJanela, int alturaJanela, int quantidadeInimigos, int pontosMaximos, int ritmo) {
-        System.out.println("Criando território " + nome);
+        System.out.println("Criando " + getClass().getSimpleName() + " " + nome + " no construtor Territorio");
 
         this.nome = nome;
         this.larguraJanela = larguraJanela;
@@ -93,10 +92,9 @@ public class Territorio extends JPanel {
 
     // Método para iniciar o jogo
     public void jogar() {
-        boolean play = true;
         janela.setVisible(true);
 
-        while (play) {
+        while (true) {
             // Captura das dimensões da janela
             larguraJanela = getWidth();
             alturaJanela = getHeight();
@@ -115,13 +113,13 @@ public class Territorio extends JPanel {
 
             // Mudar a condição para colisão do jogador principal com os inimigos
             if (pontos >= pontosMaximos) {
-                play = false;
-                fim = true;
+                tipoFim = true;
+                break;
             }
 
             if (colisao()) {
-                play = false;
-                fim = false;
+                tipoFim = false;
+                break;
             }
 
             repaint();    // Atualização da janela
@@ -137,7 +135,7 @@ public class Territorio extends JPanel {
         game_over();
     }
 
-    public boolean colisao() {
+    private boolean colisao() {
         int xA = jogador.getX();
         int yA = jogador.getY();
 
@@ -157,7 +155,7 @@ public class Territorio extends JPanel {
     private void game_over() {
         String mensagem;
 
-        if (fim) {
+        if (tipoFim) {
             mensagem = "Parabéns! Você alcançou os " + pontos + " pontos!";
         }
         else {
@@ -165,9 +163,5 @@ public class Territorio extends JPanel {
         }
 
         JOptionPane.showMessageDialog(this, mensagem, "Game Over", JOptionPane.ERROR_MESSAGE);
-    }
-
-    public String getNome(){
-        return this.nome;
     }
 }
