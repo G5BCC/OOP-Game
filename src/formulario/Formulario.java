@@ -111,27 +111,27 @@ public class Formulario{
         panel.add(textFieldNomeJogador);
 
         // Botões
-        JButton botaoOK;
+        JButton botaoComecar;
         JButton botaoSair;
         JButton botaoCarregar;
 
-        botaoOK = new JButton("Começar");
+        botaoComecar = new JButton("Começar");
         botaoSair = new JButton("Sair");
         botaoCarregar = new JButton("Carregar");
 
-        botaoOK.setBounds(120, 220, 100, 30);
+        botaoComecar.setBounds(120, 220, 100, 30);
         botaoSair.setBounds(260, 220, 100, 30);
         botaoCarregar.setBounds(360, 220, 100, 30);
 
-        panel.add(botaoOK);
+        panel.add(botaoComecar);
         panel.add(botaoSair);
         panel.add(botaoCarregar);
 
-        ActionListener leitorOK = new LeitorBotoesComecar(this);
+        ActionListener leitorComecar = new LeitorBotoesComecar(this);
         ActionListener leitorSair = new LeitorBotoesSair(this);
         ActionListener leitorCarregar = new LeitorBotoesCarregar(this);
 
-        botaoOK.addActionListener(leitorOK);
+        botaoComecar.addActionListener(leitorComecar);
         botaoSair.addActionListener(leitorSair);
         botaoCarregar.addActionListener(leitorCarregar);
 

@@ -2,7 +2,6 @@ package jogo;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.*;
 
 public class Jogador extends Personagem {
     private boolean left, right, up, down;
@@ -19,7 +18,7 @@ public class Jogador extends Personagem {
         desenho.setColor(this.cor);
         desenho.fillOval(this.x, this.y, this.largura, this.altura);
 
-        movement();
+        movimentar();
     }
 
     public void keyPressed(KeyEvent tecla) {
@@ -64,7 +63,7 @@ public class Jogador extends Personagem {
         }
     }
 
-    private void movement() {
+    private void movimentar() {
         if (left && this.x >= 5) {
             this.x -= 5;
         }
@@ -80,29 +79,5 @@ public class Jogador extends Personagem {
         if (down && this.y <= territorio.alturaJanela - (2 * this.raio) - 2) {
             this.y += 5;
         }
-    }
-
-    public void salvar(String nomeArquivo) throws IOException{
-        FileOutputStream arquivo = new FileOutputStream(nomeArquivo);
-        ObjectOutputStream gravador = new ObjectOutputStream(arquivo);
-
-        gravador.writeObject(this);
-
-        gravador.close();
-        arquivo.close();
-    }
-
-    public Jogador abrir(String nomeArquivo) throws IOException, ClassNotFoundException{
-        Jogador jogador = null;
-
-        FileInputStream arquivo = new FileInputStream(nomeArquivo);
-        ObjectInputStream restaurador = new ObjectInputStream(arquivo);
-
-        jogador = (Jogador) restaurador.readObject();
-
-        restaurador.close();
-        arquivo.close();
-
-        return jogador;
     }
 }

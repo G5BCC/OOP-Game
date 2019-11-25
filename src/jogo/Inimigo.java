@@ -1,7 +1,6 @@
 package jogo;
 
 import java.awt.*;
-import java.io.*;
 import java.util.Random;
 
 public class Inimigo extends Personagem {
@@ -35,27 +34,7 @@ public class Inimigo extends Personagem {
         this.y = positionY;
     }
 
-    public void salvar(String nomeArquivo) throws IOException {
-        FileOutputStream arquivo = new FileOutputStream(nomeArquivo);
-        ObjectOutputStream gravador = new ObjectOutputStream(arquivo);
-
-        gravador.writeObject(this);
-
-        gravador.close();
-        arquivo.close();
-    }
-
-    public Inimigo abrir(String nomeArquivo) throws IOException, ClassNotFoundException{
-        Inimigo inimigo = null;
-
-        FileInputStream arquivo = new FileInputStream(nomeArquivo);
-        ObjectInputStream restaurador = new ObjectInputStream(arquivo);
-
-        inimigo = (Inimigo) restaurador.readObject();
-
-        restaurador.close();
-        arquivo.close();
-
-        return inimigo;
+    public Color getColor() {
+        return this.cor;
     }
 }

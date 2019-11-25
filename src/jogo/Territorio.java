@@ -21,7 +21,8 @@ public class Territorio extends JPanel {
     protected int larguraJanela, alturaJanela;
 
     // Método construtor
-    public Territorio(String nome, int larguraJanela, int alturaJanela, int quantidadeInimigos, int pontosMaximos, int ritmo) {
+    public Territorio(String nome, int larguraJanela, int alturaJanela,
+                      int quantidadeInimigos, int pontosMaximos, int ritmo) {
         System.out.println("Criando " + getClass().getSimpleName() + " " + nome + " no construtor Territorio");
 
         this.nome = nome;
@@ -101,23 +102,18 @@ public class Territorio extends JPanel {
 
             pontos++;
 
-            // Muda a posição dos inimigos no eixo X
-            for (Inimigo listaInimigo : listaInimigos) {
-                listaInimigo.setX(5);
-            }
+            // Muda a posição dos inimigos no eixo X, criando um novo a cada (25 * ritmo) pontos
+            movimentar();
 
-            // Criação de mais inimigos a cada 150 pontos
-            if (pontos % 150 == 0) {
-                listaInimigos.add(new Inimigo(Color.RED, this));
-            }
+            // Verifica a colisão entre os inimigos, criando um novo (laranja)
+            colisaoInimigos();
 
-            // Mudar a condição para colisão do jogador principal com os inimigos
+            // Condições de pontuação máxima/ colisão do jogador com o inimigo
             if (pontos >= pontosMaximos) {
                 tipoFim = true;
                 break;
             }
-
-            if (colisao()) {
+            else if (colisaoJogador()) {
                 tipoFim = false;
                 break;
             }
@@ -132,10 +128,26 @@ public class Territorio extends JPanel {
             }
         }
 
-        game_over();
+        fimJogo();
     }
 
-    private boolean colisao() {
+    private void movimentar() {
+        for (Inimigo inimigo : listaInimigos) {
+            if (inimigo.getColor() == Color.RED) {
+                inimigo.setX(5);
+            }
+            else if (inimigo.getColor() == Color.ORANGE) {
+                inimigo.setX(7);
+            }
+        }
+
+        // Criação de mais inimigos a cada 300 pontos
+        if (pontos % (ritmo * 25) == 0) {
+            listaInimigos.add(new Inimigo(Color.RED, this));
+        }
+    }
+
+    private boolean colisaoJogador() {
         int xA = jogador.getX();
         int yA = jogador.getY();
 
@@ -152,7 +164,33 @@ public class Territorio extends JPanel {
         return false;
     }
 
-    private void game_over() {
+    private void colisaoInimigos() {
+        boolean colidir = false;
+
+        for (int i = 0; i < listaInimigos.size(); i++) {
+            int x1 = listaInimigos.get(i).getX();
+            int y1 = listaInimigos.get(i).getY();
+
+            for (int j = 1; j < listaInimigos.size(); j++) {
+                int x2 = listaInimigos.get(j).getX();
+                int y2 = listaInimigos.get(j).getY();
+
+                // Comparação entre os centros de cada inimigo
+                if ((Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)) <= 2 * jogador.raio) && i != j) {
+                    colidir = true;
+                    break;
+                }
+            }
+
+            if (colidir) {
+                listaInimigos.remove(i);
+                listaInimigos.add(new Inimigo(Color.ORANGE, this));
+                break;
+            }
+        }
+    }
+
+    private void fimJogo() {
         String mensagem;
 
         if (tipoFim) {
