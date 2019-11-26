@@ -119,9 +119,9 @@ public class Formulario{
         botaoSair = new JButton("Sair");
         botaoCarregar = new JButton("Carregar");
 
-        botaoComecar.setBounds(120, 220, 100, 30);
-        botaoSair.setBounds(260, 220, 100, 30);
-        botaoCarregar.setBounds(360, 220, 100, 30);
+        botaoComecar.setBounds(50, 220, 100, 30);
+        botaoCarregar.setBounds(190, 220, 100, 30);
+        botaoSair.setBounds(330, 220, 100, 30);
 
         panel.add(botaoComecar);
         panel.add(botaoSair);

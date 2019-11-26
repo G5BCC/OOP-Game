@@ -25,8 +25,8 @@ public class LeitorBotoesCarregar implements ActionListener {
         if(valor == JFileChooser.APPROVE_OPTION){
             try{
                 form.abrir(jfc.getSelectedFile().getName());
-            } catch (IOException | ClassNotFoundException ex){
-                JOptionPane.showMessageDialog(button, ex.getMessage());
+            } catch (Exception ex){
+                JOptionPane.showMessageDialog(button, ex.getStackTrace());
             }
 
         }
