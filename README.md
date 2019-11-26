@@ -12,7 +12,7 @@
         - **i.** teclado (por exemplo, setas);
 		- **ii.** mouse;
 		- **iii.** joystick.
-- [ ] **4.** Toda colisão entre dois objetos deve ser detectada e, como consequência, deve ocorrer alguma ação.
+- [X] **4.** Toda colisão entre dois objetos deve ser detectada e, como consequência, deve ocorrer alguma ação.
     - **a.** Uma colisão entre o objeto da classe B (jogador) e um objeto da classe A deve ter impacto no resultado do jogo;
     - **b.** Uma colisão entre dois objetos da classe A deve ter impacto nos próprios objetos.
 - [X] **5.** Deve haver uma regra para o término do jogo.
