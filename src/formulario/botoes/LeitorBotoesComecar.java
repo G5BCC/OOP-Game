@@ -1,6 +1,7 @@
 package formulario.botoes;
 
 import formulario.Formulario;
+import jogo.Dados;
 
 import java.io.*;
 import java.awt.event.ActionEvent;

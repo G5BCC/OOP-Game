@@ -27,8 +27,6 @@ public class Formulario{
 
     private ArrayList<JTextField> listaCampos;
 
-    private Dados dados;
-
     public Formulario(String tituloFormulario) {
         frame = new JFrame(tituloFormulario);
         frame.setSize(500, 300);
@@ -191,12 +189,12 @@ public class Formulario{
     }
 
     private void salvar() throws IOException {
-        String caminho = new File(".").getCanonicalPath() + "/saves/";
-        dados = new Dados(nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
-        dados.salvar(caminho + getNomeJogador() + ".trt");
+        Dados dados = new Dados(nomeJogador, janelaX, janelaY, quantidadeObjetos, pontuacaoMaxima, ritmoJogo);
+        dados.salvar(getNomeJogador());
     }
 
-    public Dados abrir(String nomeArquivo) throws IOException, ClassNotFoundException{
-        return dados.abrir(nomeArquivo);
+    public void abrirJogo(Dados dados) throws InterruptedException {
+        Thread.sleep(1000);
+        new Territorio(dados.getNome(), dados.getX(), dados.getY(), dados.quantInimigos(), dados.pontosMaximos(), dados.ritmoJogo()).jogar();
     }
 }
